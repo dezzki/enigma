@@ -1,0 +1,121 @@
+@startuml
+title Enigma — Entity Relationship Diagram (core entities)
+skinparam backgroundColor #FFFFFF
+skinparam class {
+  BackgroundColor #E8F0FE
+  BorderColor #1A73E8
+  ArrowColor #1A73E8
+  FontSize 11
+}
+hide methods
+hide circle
+entity "User" as User {
+  *id : uuid
+  --
+  handle : string
+  level : int
+  xp : int
+  streak : int
+}
+entity "Community" as Community {
+  *id : uuid
+  --
+  name : string
+  type : enum
+  level : int
+}
+entity "Membership" as Membership {
+  *id : uuid
+  --
+  role : enum
+  joined_at : datetime
+}
+entity "Challenge" as Challenge {
+  *id : uuid
+  --
+  title : string
+  target_type : enum
+  start_at : datetime
+  end_at : datetime
+  state : enum
+}
+entity "Milestone" as Milestone {
+  *id : uuid
+  --
+  label : string
+  due_at : datetime
+}
+entity "ChallengeMember" as CM {
+  *id : uuid
+  --
+  progress : float
+  status : enum
+}
+entity "Submission" as Submission {
+  *id : uuid
+  --
+  proof_type : enum
+  artifact_urls : json
+}
+entity "Verification" as Verification {
+  *id : uuid
+  --
+  stage : enum
+  verdict : enum
+  confidence : float
+}
+entity "PeerVote" as PeerVote {
+  *id : uuid
+  --
+  vote : enum
+  accurate : bool
+}
+entity "Post" as Post {
+  *id : uuid
+  --
+  body : text
+  created_at : datetime
+}
+entity "Story" as Story {
+  *id : uuid
+  --
+  media : json
+  expires_at : datetime
+}
+entity "Note" as Note {
+  *id : uuid
+  --
+  body : string
+}
+entity "XP_Event" as XPEvent {
+  *id : uuid
+  --
+  amount : int
+  source : string
+}
+entity "Badge" as Badge {
+  *id : uuid
+  --
+  type : string
+  earned_at : datetime
+}
+User ||--o{ Membership
+Community ||--o{ Membership
+Community ||--o{ Challenge
+Challenge ||--o{ Milestone
+Challenge ||--o{ CM
+User ||--o{ CM
+Milestone ||--o{ Submission
+CM ||--o{ Submission
+Submission ||--o{ Verification
+Verification ||--o{ PeerVote
+User ||--o{ PeerVote
+Challenge ||--o{ Post
+User ||--o{ Post
+User ||--o{ XPEvent
+User ||--o{ Badge
+Community ||--o{ Story
+User ||--o{ Story
+Community ||--o{ Note
+User ||--o{ Note
+@enduml

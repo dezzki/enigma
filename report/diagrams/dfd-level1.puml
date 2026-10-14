@@ -1,0 +1,33 @@
+@startuml
+title Enigma — DFD Level 1: Check-in & Verification
+skinparam backgroundColor #FFFFFF
+skinparam rectangle {
+  BackgroundColor #E8F0FE
+  BorderColor #1A73E8
+  FontSize 12
+}
+skinparam database {
+  BackgroundColor #F1F3F4
+  BorderColor #5F6368
+}
+actor Member as M
+rectangle "1.0\nValidate &\nAnti-cheat\npre-screen" as P1
+rectangle "2.0\nAI\nVerification" as P2
+rectangle "3.0\nPeer Quorum\n(3+ votes)" as P3
+rectangle "4.0\nAdmin Review\n& Appeal" as P4
+rectangle "5.0\nXP, Badge &\nLeaderboard\nUpdate" as P5
+database "D1 Submission\nstore" as D1
+database "D2 Verification\nlog (append-only)" as D2
+database "D3 XP\nEvents" as D3
+M --> P1 : check-in evidence
+P1 --> D1 : validated submission
+P1 --> P2 : evidence + pre-screen result
+P2 --> D2 : verdict + confidence
+P2 --> P3 : confidence 0.50 - 0.89
+P3 --> D2 : quorum verdict
+P2 --> P4 : confidence < 0.50 / appeal
+P4 --> D2 : override (logged)
+D2 --> P5 : final verdict
+P5 --> D3 : XP events
+P5 --> M : status, XP, badge, level
+@enduml

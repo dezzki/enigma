@@ -1,0 +1,40 @@
+@startuml
+title Enigma — Verification Sequence (medium-confidence check-in)
+skinparam backgroundColor #FFFFFF
+skinparam sequence {
+  ArrowColor #1A73E8
+  LifeLineBorderColor #5F6368
+  ParticipantBorderColor #1A73E8
+  ParticipantBackgroundColor #E8F0FE
+}
+actor Member
+participant "API Gateway" as API
+participant "Anti-cheat" as AC
+participant "AI Verifier" as AI
+participant "Peer Queue" as PQ
+participant "Admin" as ADM
+database "Audit Log" as LOG
+Member -> API : submit check-in (evidence + note)
+API -> AC : rate-limit, pHash duplicate, metadata
+AC --> API : pre-screen result
+API -> AI : verify(evidence)
+AI -> AI : multi-modal analysis
+AI --> API : verdict + confidence + explanation
+alt confidence >= 0.90
+  API -> LOG : append (AI-Verified)
+  API --> Member : Verified in <= 30s
+else confidence 0.50 - 0.89
+  API -> PQ : enqueue for peer quorum
+  PQ -> PQ : 3 agreeing votes (Level 3+)
+  alt unanimous
+    PQ -> LOG : append (Peer-Verified)
+    PQ --> Member : Verified <= 24h
+  else split (2-1)
+    PQ -> ADM : escalate
+    ADM --> Member : decision (appealable)
+  end
+else confidence < 0.50 or fraud signal
+  API -> ADM : escalate (needs review)
+  ADM --> Member : decision + reason (appealable)
+end
+@enduml

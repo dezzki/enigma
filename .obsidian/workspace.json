@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Enigma-PRD.md",
+                "file": "Enigma-SRS.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Enigma-PRD"
+              "title": "Enigma-SRS"
             }
           }
         ]
@@ -189,5 +189,8 @@
     }
   },
   "active": "529d1c2efbc0e482",
-  "lastOpenFiles": []
+  "lastOpenFiles": [
+    "Enigma-PRD.md",
+    "process-flow.md"
+  ]
 }

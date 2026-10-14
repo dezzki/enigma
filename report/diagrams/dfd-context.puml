@@ -1,0 +1,29 @@
+@startuml
+title Enigma — Context Diagram (DFD Level 0)
+skinparam backgroundColor #FFFFFF
+skinparam rectangle {
+  BackgroundColor #E8F0FE
+  BorderColor #1A73E8
+  FontColor #202124
+  FontSize 13
+}
+skinparam actor {
+  BackgroundColor #FFF3E0
+  BorderColor #FB8C00
+}
+actor Member as M
+actor "Community Admin" as A
+rectangle "0\nEnigma Platform" as SYS
+actor "OAuth Provider\n(Google)" as OA
+actor "GitHub / Wearable APIs" as GH
+actor "AI Verification Service" as AI
+M --> SYS : credentials, proof artifacts,\nchallenge actions
+SYS --> M : gated feed, verdicts,\nXP / levels, notifications
+A --> SYS : challenge config,\nverdict overrides
+SYS --> A : queues, completion\nreports, analytics
+OA --> SYS : identity tokens
+SYS --> OA : auth requests
+GH --> SYS : repo / activity / health data
+AI --> SYS : verdict + confidence\n+ explanation
+SYS --> AI : evidence for review
+@enduml

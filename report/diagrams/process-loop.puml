@@ -1,0 +1,29 @@
+@startuml
+title Enigma — Iterative Process Flow
+skinparam backgroundColor #FFFFFF
+skinparam activity {
+  BackgroundColor #E8F0FE
+  BorderColor #1A73E8
+  ArrowColor #1A73E8
+  FontName Helvetica
+  FontSize 13
+}
+start
+:Communication\n(personas, interviews, open questions);
+:Planning\n(scope cut, risks, tech stack, KPIs);
+repeat
+  :Modeling\n(domain model, state machine,\narchitecture, DB schema);
+repeat while (design review passes?) is (no - revise)
+:Construction\n(code + unit/integration tests);
+:Demo & Feedback\n(professor / course peers);
+note right
+  Feedback returns to Communication
+  for the next iteration:
+  Itr-1 (MVP) -> Itr-2 (v1) -> Itr-3 (v2)
+end note
+-> Deployment;
+:D-1  CI/CD + staging environment;
+:D-2  Release MVP to pilot communities;
+:D-3  Monitor KPIs vs go/no-go gates;
+stop
+@enduml

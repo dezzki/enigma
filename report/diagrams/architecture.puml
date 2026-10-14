@@ -1,0 +1,62 @@
+@startuml
+title Enigma — System Architecture
+skinparam backgroundColor #FFFFFF
+skinparam componentStyle rectangle
+skinparam rectangle {
+  BackgroundColor #E8F0FE
+  BorderColor #1A73E8
+  FontSize 12
+}
+skinparam database {
+  BackgroundColor #F1F3F4
+  BorderColor #5F6368
+}
+package "Clients" {
+  [Mobile App\n(iOS / Android)] as MOB
+  [Web Admin\n(PWA)] as WEB
+}
+package "Edge" {
+  [API Gateway\nREST + WebSocket] as GW
+  [Posting Gate\n(time + state check)] as GATE
+}
+package "Core Services" {
+  [User & Auth] as USR
+  [Community] as COM
+  [Challenge &\nState Engine] as CH
+  [Feed / Story /\nNote] as FEED
+  [Chat] as CHAT
+  [Notification] as NOTIF
+  [XP & Leaderboard] as XP
+}
+package "Verification" {
+  [Anti-cheat] as AC
+  [AI Verifier\n(job queue)] as AIS
+  [Peer Queue] as PQ
+}
+package "Data" {
+  database "PostgreSQL" as PG
+  database "Redis + BullMQ" as RD
+  database "S3 Object Store\n(evidence + audit)" as S3
+}
+MOB --> GW
+WEB --> GW
+GW --> GATE
+GW --> USR
+GW --> COM
+GW --> CH
+GW --> FEED
+GW --> CHAT
+GW --> NOTIF
+GW --> XP
+CH --> AIS
+AIS --> AC
+AIS --> PQ
+USR --> PG
+COM --> PG
+CH --> PG
+XP --> PG
+GW --> RD
+AIS --> RD
+FEED --> S3
+AIS --> S3
+@enduml

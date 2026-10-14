@@ -1,0 +1,14 @@
+@startgantt
+title Enigma - Project Schedule (single developer, ~16 weeks + v2)
+Project starts 2026-08-03
+saturday are closed
+sunday are closed
+[Itr-1 Elicitation and planning] lasts 1 week
+[Itr-1 Modeling and design] lasts 1 week
+[Itr-1 Build P0 core] lasts 4 weeks
+[Itr-1 Testing and KPI harness] lasts 1 week
+[Itr-1 Deployment MVP pilot] lasts 1 week
+[Itr-2 v1 build] lasts 7 weeks
+[Itr-3 v2 build] lasts 5 weeks
+[Deployment] happens at [Itr-1 Deployment MVP pilot]'s end
+@endgantt

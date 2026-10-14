@@ -1,0 +1,42 @@
+@startuml
+title Enigma — Use Case Diagram
+left to right direction
+skinparam backgroundColor #FFFFFF
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+actor "Member" as M
+actor "Verifier (L3+)" as V
+actor "Admin / Organizer" as A
+actor "Platform Admin" as PA
+rectangle "Enigma Platform" {
+  usecase "Sign up / Log in" as UC1
+  usecase "Join Community" as UC2
+  usecase "Join Challenge" as UC3
+  usecase "Submit Proof (Check-in)" as UC4
+  usecase "Post / Comment (Live only)" as UC5
+  usecase "Post Story / Note (24x7)" as UC6
+  usecase "Vote on Peer Queue" as UC7
+  usecase "Create Challenge" as UC8
+  usecase "Review / Override Verdict" as UC9
+  usecase "Resolve Appeal" as UC10
+  usecase "Earn XP / Level Up" as UC11
+  usecase "View Leaderboards" as UC12
+  usecase "Export Completion Report" as UC13
+  usecase "Manage Community" as UC14
+}
+M --> UC1
+M --> UC2
+M --> UC3
+M --> UC4
+M --> UC5
+M --> UC6
+M --> UC11
+M --> UC12
+V --> UC7
+A --> UC8
+A --> UC9
+A --> UC10
+A --> UC13
+A --> UC14
+PA --> UC14
+@enduml

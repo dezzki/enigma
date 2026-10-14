@@ -1,0 +1,33 @@
+@startuml
+title Enigma — Challenge Lifecycle State Machine
+skinparam backgroundColor #FFFFFF
+skinparam state {
+  BackgroundColor #E8F0FE
+  BorderColor #1A73E8
+  FontSize 14
+  AttributeFontSize 12
+}
+[*] --> Draft
+Draft --> Announced : admin publishes
+Draft --> [*] : cancelled
+Announced --> Live : start_at reached\n(server clock)
+Live --> Ending : end_at reached\n(submissions close atomically)
+Ending --> Archived : grace window ends
+Archived --> [*]
+note right of Announced
+  Pre-join / registration open.
+  Posts GATED (thread read-only).
+end note
+note bottom of Live
+  Posts + check-ins OPEN.
+  Countdown live. Voting enabled.
+end note
+note right of Ending
+  Configurable grace period
+  (e.g. 24h) for final proofs.
+end note
+note left of Archived
+  Read-only "proof wall":
+  results, stats, badges.
+end note
+@enduml
